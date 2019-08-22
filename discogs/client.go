@@ -1,7 +1,9 @@
 package discogs
 
 import (
+    "net/http"
     "net/url"
+    "errors"
 )
 
 var baseURL = &url.URL{
@@ -29,7 +31,11 @@ type ClientOptions struct {
 }
 
 // Instantiate a new client, only UserAgent is required.
-func New(options ClientOptions) (client *Client, err error) {
+func NewClient(options ClientOptions) (client *Client, err error) {
+    if len(options.UserAgent) == 0 {
+		return nil, errors.New("UserAgent is required.")
+	}
+
     if options.HTTPClient == nil {
 		options.HTTPClient = &http.Client{}
 	}
