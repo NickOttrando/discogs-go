@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
+	//"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -85,7 +85,7 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(resBody))
+	//fmt.Println(string(resBody))
 
 	// Successful response
 	if res.StatusCode == 200 || res.StatusCode == 201 || res.StatusCode == 204 {

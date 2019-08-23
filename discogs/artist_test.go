@@ -7,7 +7,7 @@ import (
 )
 
 func TestGetArtist(t *testing.T) {
-	artist, err := testClient.GetArtist("1713695")
+	artist, err := testClient.GetArtist(1713695)
 	assert.Nil(t, err)
 	assert.NotNil(t, artist.ID)
 	assert.NotNil(t, artist.ResourceURL)
@@ -15,7 +15,7 @@ func TestGetArtist(t *testing.T) {
 }
 
 func TestGetArtistReleases(t *testing.T) {
-	artistReleases, err := testClient.GetArtistReleases("1713695")
+	artistReleases, err := testClient.GetArtistReleases(1713695)
 	releases := artistReleases.Releases
 	assert.Nil(t, err)
 	assert.NotNil(t, releases)
