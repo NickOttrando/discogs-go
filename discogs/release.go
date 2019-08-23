@@ -22,7 +22,7 @@ type ReleaseVideo struct {
 }
 
 type Release struct {
-	ID          int            `json:"id"`
+	ID          int64          `json:"id"`
 	Status      string         `json:"status"`
 	Stats       ReleaseStat    `json:"stats"`
 	Thumb       string         `json:"thumb"`
@@ -47,7 +47,7 @@ type ReleasesResponse struct {
 }
 
 // todo: support curr_abbr toggle
-func (c *Client) GetRelease(releaseID int) (out *Release, err error) {
+func (c *Client) GetRelease(releaseID int64) (out *Release, err error) {
 	err = c.get(fmt.Sprintf("releases/%d", releaseID), &out)
 	return
 }

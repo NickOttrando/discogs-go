@@ -5,13 +5,13 @@ import (
 )
 
 type ArtistAlias struct {
-	ID          int    `json:"id"`
+	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	ResourceURL string `json:"resource_url"`
 }
 
 type Artist struct {
-	ID          int           `json:"id"`
+	ID          int64         `json:"id"`
 	Name        string        `json:"name"`
 	RealName    string        `json:"realname"`
 	Profile     string        `json:"profile"`
@@ -23,13 +23,13 @@ type Artist struct {
 	Aliases     []ArtistAlias `json:"aliases"`
 }
 
-func (c *Client) GetArtist(artistID int) (out *Artist, err error) {
+func (c *Client) GetArtist(artistID int64) (out *Artist, err error) {
 	err = c.get(fmt.Sprintf("artists/%d", artistID), &out)
 	return
 }
 
 // get releases for artist, todo: support sort params
-func (c *Client) GetArtistReleases(artistID int) (out *ReleasesResponse, err error) {
+func (c *Client) GetArtistReleases(artistID int64) (out *ReleasesResponse, err error) {
 	err = c.get(fmt.Sprintf("artists/%d/releases", artistID), &out)
 	return
 }
