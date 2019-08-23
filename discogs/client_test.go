@@ -1,17 +1,17 @@
 package discogs
 
 import (
-    "testing"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"net/http"
-    "github.com/stretchr/testify/assert"
-    "github.com/stretchr/testify/require"
+	"testing"
 )
 
 var (
 	userAgent = "Discogs Go Test Client"
-    token = "getenv tok"
-    key = "getenv key"
-	secret = "getenv secret"
+	token     = "getenv tok"
+	key       = "getenv key"
+	secret    = "getenv secret"
 )
 
 var testOptions = ClientOptions{
@@ -25,8 +25,8 @@ var testOptions = ClientOptions{
 var testClient, err = NewClient(testOptions)
 
 func TestClient(t *testing.T) {
-    assert, require := assert.New(t), require.New(t)
+	assert, require := assert.New(t), require.New(t)
 
-    require.NoError(err)
-    assert.Equal(testClient.userAgent, testOptions.UserAgent)
+	require.NoError(err)
+	assert.Equal(testClient.userAgent, testOptions.UserAgent)
 }
