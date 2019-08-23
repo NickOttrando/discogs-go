@@ -41,9 +41,9 @@ type Release struct {
 	Artists     []Artist       `json:"artists"`
 }
 
-// todo: support pagination metadata
 type ReleasesResponse struct {
-	Releases []Release `json:"releases"`
+	Releases   []Release `json:"releases"`
+	Pagination `json:"pagination"`
 }
 
 // todo: support curr_abbr toggle

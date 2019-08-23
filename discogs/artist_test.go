@@ -21,4 +21,11 @@ func TestGetArtistReleases(t *testing.T) {
 	assert.NotNil(t, releases)
 	assert.NotNil(t, releases[0].ID)
 	assert.NotNil(t, releases[0].Title)
+
+	//test pagination
+	assert.NotNil(t, artistReleases.PerPage)
+	assert.NotNil(t, artistReleases.Pages)
+	assert.NotNil(t, artistReleases.URLs)
+	assert.NotNil(t, artistReleases.Items)
+	assert.Equal(t, artistReleases.CurrentPage, 1)
 }
