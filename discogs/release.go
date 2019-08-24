@@ -13,32 +13,43 @@ type ReleaseStat struct {
 	Community CommunityStat `json:"community"`
 }
 
-type ReleaseVideo struct {
-	Duration    int    `json:"duration"`
-	Description string `json:"description"`
-	Embed       bool   `json:"embed"`
-	URI         string `json:"uri"`
-	Title       string `json:"title"`
+type Track struct {
+	Duration string `json:"duration"`
+	Position string `json:"position"`
+	Type     string `json:"type_"`
+	Title    string `json:"title"`
 }
 
 type Release struct {
-	ID          int64          `json:"id"`
-	Status      string         `json:"status"`
-	Stats       ReleaseStat    `json:"stats"`
-	Thumb       string         `json:"thumb"`
-	Title       string         `json:"title"`
-	Format      string         `json:"format"`
-	Label       string         `json:"label"`
-	Role        string         `json:"role"`
-	Year        int            `json:"year"`
-	ResourceURL string         `json:"resource_url"`
-	Artist      string         `json:"artist"`
-	Type        string         `json:"type"`
-	NumForSale  int            `json:"num_for_sale"`
-	Styles      []string       `json:"styles"`
-	Videos      []ReleaseVideo `json:"videos"`
-	Labels      []Label        `json:"labels"`
-	Artists     []Artist       `json:"artists"`
+	ID                   int64       `json:"id"`
+	Status               string      `json:"status"`
+	Stats                ReleaseStat `json:"stats"`
+	Thumb                string      `json:"thumb"`
+	Title                string      `json:"title"`
+	Format               string      `json:"format"`
+	Label                string      `json:"label"`
+	Role                 string      `json:"role"`
+	Year                 int         `json:"year"`
+	ResourceURL          string      `json:"resource_url"`
+	Artist               string      `json:"artist"`
+	Type                 string      `json:"type"`
+	NumForSale           int         `json:"num_for_sale"`
+	DataQuality          string      `json:"data_quality"`
+	LowestPrice          float32     `json:"lowest_price"`
+	MostRecentReleaseURL string      `json:"most_recent_release_url"`
+	MostRecentRelease    int64       `json:"most_recent_release"`
+	VersionsURL          string      `json:"versions_url"`
+	MainReleaseURL       string      `json:"main_release_url"`
+	MainRelease          int64       `json:"main_release"`
+	Notes                string      `json:"notes"`
+	URI                  string      `json:"uri"`
+	Styles               []string    `json:"styles"`
+	Images               []Image     `json:"images"`
+	Genres               []string    `json:"genres"`
+	Videos               []Video     `json:"videos"`
+	Labels               []Label     `json:"labels"`
+	Artists              []Artist    `json:"artists"`
+	Tracklist            []Track     `json:"tracklist"`
 }
 
 type ReleasesResponse struct {
