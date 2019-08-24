@@ -9,7 +9,6 @@ import (
 
 var baseURL = "api.discogs.com/"
 
-// Only userAgent is required to create a client
 type Client struct {
 	httpClient *http.Client
 	userAgent  string
@@ -39,6 +38,7 @@ func NewClient(options ClientOptions) (client *Client, err error) {
 	}, nil
 }
 
+// Builds request object, calls do once it's been formatted
 func (c *Client) Call(endpoint string, method string, in, out interface{}) error {
 	req, err := c.newRequest(endpoint, method, in, out)
 	if err != nil {
@@ -48,7 +48,7 @@ func (c *Client) Call(endpoint string, method string, in, out interface{}) error
 	return c.do(req, out)
 }
 
-// newRequest is used by Call to generate a http.Request with appropriate headers.
+// Formats the request structure, adds query strings to URL and headers for auth
 func (c *Client) newRequest(endpoint string, method string, in, out interface{}) (*http.Request, error) {
 	req, err := http.NewRequest(method, "https://"+string(baseURL)+endpoint, nil)
 	if err != nil {
@@ -80,7 +80,7 @@ func (c *Client) newRequest(endpoint string, method string, in, out interface{})
 	return req, nil
 }
 
-// do makes the formatted request and unmarshals the response or returns an err
+// makes the formatted request and handles the response
 func (c *Client) do(req *http.Request, out interface{}) error {
 	res, err := c.httpClient.Do(req)
 
@@ -93,6 +93,7 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	if err != nil {
 		return err
 	}
+    //fmt.Println(req.URL.String())
 	//fmt.Println(string(resBody))
 
 	// Successful response

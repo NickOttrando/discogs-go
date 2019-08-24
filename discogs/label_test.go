@@ -6,16 +6,18 @@ import (
 	assert "github.com/stretchr/testify/require"
 )
 
+var testLabelID = int64(209402)
+
 func TestGetLabel(t *testing.T) {
-	label, err := testClient.GetLabel(209402)
+	label, err := testClient.GetLabel(testLabelID)
 	assert.Nil(t, err)
 	assert.NotNil(t, label.ID)
-	assert.Equal(t, label.ID, int64(209402))
+	assert.Equal(t, label.ID, testLabelID)
 	assert.NotNil(t, label.Name)
 }
 
 func TestGetLabelReleases(t *testing.T) {
-	labelReleases, err := testClient.GetLabelReleases(209402)
+	labelReleases, err := testClient.GetLabelReleases(testLabelID, nil)
 	releases := labelReleases.Releases
 	assert.Nil(t, err)
 	assert.NotNil(t, releases)
@@ -28,4 +30,8 @@ func TestGetLabelReleases(t *testing.T) {
 	assert.NotNil(t, labelReleases.URLs)
 	assert.NotNil(t, labelReleases.Items)
 	assert.Equal(t, labelReleases.Page, 1)
+
+    nextReleases, err := testClient.GetLabelReleases(testLabelID, &PageOptions{Page: "2"})
+    assert.NotNil(t, nextReleases.Releases)
+    assert.Equal(t, nextReleases.Page, 2)
 }

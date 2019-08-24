@@ -18,7 +18,7 @@ func (c *Client) GetLabel(labelID int64) (out *Label, err error) {
 	return
 }
 
-func (c *Client) GetLabelReleases(labelID int64) (out *ReleasesResponse, err error) {
-	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), nil, &out)
+func (c *Client) GetLabelReleases(labelID int64, opts *PageOptions) (out *ReleasesResponse, err error) {
+	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), &opts, &out)
 	return
 }
