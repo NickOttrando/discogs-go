@@ -24,12 +24,12 @@ type Artist struct {
 }
 
 func (c *Client) GetArtist(artistID int64) (out *Artist, err error) {
-	err = c.get(fmt.Sprintf("artists/%d", artistID), &out)
+	err = c.get(fmt.Sprintf("artists/%d", artistID), nil, &out)
 	return
 }
 
 // get releases for artist, todo: support sort params
-func (c *Client) GetArtistReleases(artistID int64) (out *ReleasesResponse, err error) {
-	err = c.get(fmt.Sprintf("artists/%d/releases", artistID), &out)
+func (c *Client) GetArtistReleases(artistID int64, opts *PageOptions) (out *ReleasesResponse, err error) {
+	err = c.get(fmt.Sprintf("artists/%d/releases", artistID), &opts, &out)
 	return
 }

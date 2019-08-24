@@ -14,11 +14,11 @@ type Label struct {
 }
 
 func (c *Client) GetLabel(labelID int64) (out *Label, err error) {
-	err = c.get(fmt.Sprintf("labels/%d", labelID), &out)
+	err = c.get(fmt.Sprintf("labels/%d", labelID), nil, &out)
 	return
 }
 
 func (c *Client) GetLabelReleases(labelID int64) (out *ReleasesResponse, err error) {
-	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), &out)
+	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), nil, &out)
 	return
 }

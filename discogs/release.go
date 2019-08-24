@@ -59,6 +59,6 @@ type ReleasesResponse struct {
 
 // todo: support curr_abbr toggle
 func (c *Client) GetRelease(releaseID int64) (out *Release, err error) {
-	err = c.get(fmt.Sprintf("releases/%d", releaseID), &out)
+	err = c.get(fmt.Sprintf("releases/%d", releaseID), nil, &out)
 	return
 }

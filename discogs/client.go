@@ -1,10 +1,8 @@
 package discogs
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
-	"io"
 	"io/ioutil"
 	"net/http"
 )
@@ -41,8 +39,8 @@ func NewClient(options ClientOptions) (client *Client, err error) {
 	}, nil
 }
 
-func (c *Client) Call(endpoint string, method string, body []byte, out interface{}) error {
-	req, err := c.newRequest(endpoint, method, bytes.NewReader(body), out)
+func (c *Client) Call(endpoint string, method string, in, out interface{}) error {
+	req, err := c.newRequest(endpoint, method, in, out)
 	if err != nil {
 		return err
 	}
@@ -51,10 +49,26 @@ func (c *Client) Call(endpoint string, method string, body []byte, out interface
 }
 
 // newRequest is used by Call to generate a http.Request with appropriate headers.
-func (c *Client) newRequest(endpoint string, method string, body io.Reader, out interface{}) (*http.Request, error) {
-	req, err := http.NewRequest(method, "https://"+string(baseURL)+endpoint, body)
+func (c *Client) newRequest(endpoint string, method string, in, out interface{}) (*http.Request, error) {
+	req, err := http.NewRequest(method, "https://"+string(baseURL)+endpoint, nil)
 	if err != nil {
 		return nil, err
+	}
+
+	switch in := in.(type) {
+	case nil: // nop
+	default:
+		buf, err := json.Marshal(in)
+		if err != nil {
+			return nil, err
+		}
+		m := make(map[string]string)
+		err = json.Unmarshal(buf, &m)
+		q := req.URL.Query()
+		for k, v := range m {
+			q.Add(k, v)
+		}
+		req.URL.RawQuery = q.Encode()
 	}
 
 	req.Header.Add("Content-Type", "application/json")
@@ -89,16 +103,16 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	return err
 }
 
-func (c *Client) get(endpoint string, out interface{}) error {
-	return c.Call(endpoint, "GET", nil, out)
+func (c *Client) get(endpoint string, in, out interface{}) error {
+	return c.Call(endpoint, "GET", in, out)
 }
 
-func (c *Client) post(endpoint string, body []byte, out interface{}) error {
-	return c.Call(endpoint, "POST", body, out)
+func (c *Client) post(endpoint string, in, out interface{}) error {
+	return c.Call(endpoint, "POST", in, out)
 }
 
-func (c *Client) put(endpoint string, body []byte, out interface{}) error {
-	return c.Call(endpoint, "PUT", body, out)
+func (c *Client) put(endpoint string, in, out interface{}) error {
+	return c.Call(endpoint, "PUT", in, out)
 }
 
 func (c *Client) delete(endpoint string) error {

@@ -14,8 +14,8 @@ type Pagination struct {
 }
 
 type PageOptions struct {
-	PerPage   int    `json:"per_page,omitempty"`
-	Page      int    `json:"page,omitempty"`
-	Sort      string `json:"sort,omitonempty"`
-	SortOrder string `json:"sort_order,omitonempty"`
+	PerPage   string `json:"per_page,omitempty"`
+	Page      string `json:"page,omitempty"`
+	Sort      string `json:"sort,omitempty"`
+	SortOrder string `json:"sort_order,omitempty"`
 }

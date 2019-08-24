@@ -9,11 +9,11 @@ type Master struct {
 }
 
 func (c *Client) GetMaster(masterID int64) (out *Master, err error) {
-	err = c.get(fmt.Sprintf("masters/%d", masterID), &out)
+	err = c.get(fmt.Sprintf("masters/%d", masterID), nil, &out)
 	return
 }
 
 func (c *Client) GetMasterVersions(masterID int64) (out *VersionsResponse, err error) {
-	err = c.get(fmt.Sprintf("masters/%d/versions", masterID), &out)
+	err = c.get(fmt.Sprintf("masters/%d/versions", masterID), nil, &out)
 	return
 }
