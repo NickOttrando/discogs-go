@@ -12,15 +12,11 @@ import (
 var (
 	userAgent = "Discogs Go Test Client"
 	token     = os.Getenv("DISCOGS_TOKEN")
-	key       = os.Getenv("DISCOGS_KEY")
-	secret    = os.Getenv("DISCOGS_SECRET")
 )
 
 var testOptions = ClientOptions{
 	userAgent,
 	token,
-	key,
-	secret,
 	&http.Client{},
 }
 

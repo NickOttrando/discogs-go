@@ -11,22 +11,16 @@ import (
 
 var baseURL = "api.discogs.com/"
 
+// Only userAgent is required to create a client
 type Client struct {
-	// A specified http client, defaults to http.DefaultClient.
 	httpClient *http.Client
-	// A User-Agent unique to the client using this Go wrapper.
-	userAgent string
-	// Optionally pass Key and Secret of your own or user token.
-	key    string
-	secret string
-	token  string
+	userAgent  string
+	token      string
 }
 
 type ClientOptions struct {
 	UserAgent  string
 	Token      string
-	Key        string
-	Secret     string
 	HTTPClient *http.Client
 }
 
@@ -43,8 +37,6 @@ func NewClient(options ClientOptions) (client *Client, err error) {
 	return &Client{
 		userAgent:  options.UserAgent,
 		token:      options.Token,
-		key:        options.Key,
-		secret:     options.Secret,
 		httpClient: options.HTTPClient,
 	}, nil
 }
@@ -67,6 +59,9 @@ func (c *Client) newRequest(endpoint string, method string, body io.Reader, out 
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", c.userAgent)
+	if len(c.token) > 0 {
+		req.Header.Add("Authorization", "Discogs token:"+c.token)
+	}
 
 	return req, nil
 }
