@@ -1,17 +1,19 @@
 package discogs
 
 import (
+	"net/http"
+	"os"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"net/http"
-	"testing"
 )
 
 var (
 	userAgent = "Discogs Go Test Client"
-	token     = "getenv tok"
-	key       = "getenv key"
-	secret    = "getenv secret"
+	token     = os.Getenv("DISCOGS_TOKEN")
+	key       = os.Getenv("DISCOGS_KEY")
+	secret    = os.Getenv("DISCOGS_SECRET")
 )
 
 var testOptions = ClientOptions{

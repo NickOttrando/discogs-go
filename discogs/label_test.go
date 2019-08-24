@@ -27,5 +27,5 @@ func TestGetLabelReleases(t *testing.T) {
 	assert.NotNil(t, labelReleases.Pages)
 	assert.NotNil(t, labelReleases.URLs)
 	assert.NotNil(t, labelReleases.Items)
-	assert.Equal(t, labelReleases.CurrentPage, 1)
+	assert.Equal(t, labelReleases.Page, 1)
 }

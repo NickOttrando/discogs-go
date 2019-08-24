@@ -27,5 +27,5 @@ func TestGetArtistReleases(t *testing.T) {
 	assert.NotNil(t, artistReleases.Pages)
 	assert.NotNil(t, artistReleases.URLs)
 	assert.NotNil(t, artistReleases.Items)
-	assert.Equal(t, artistReleases.CurrentPage, 1)
+	assert.Equal(t, artistReleases.Page, 1)
 }
