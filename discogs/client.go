@@ -55,15 +55,19 @@ func (c *Client) newRequest(endpoint string, method string, in, out interface{})
 		return nil, err
 	}
 
-	switch in := in.(type) {
-	case nil: // nop
-	default:
+	// query args strings for pagination, sort, etc.
+	if in != nil {
 		buf, err := json.Marshal(in)
 		if err != nil {
 			return nil, err
 		}
 		m := make(map[string]string)
+
 		err = json.Unmarshal(buf, &m)
+		if err != nil {
+			return nil, err
+		}
+
 		q := req.URL.Query()
 		for k, v := range m {
 			q.Add(k, v)
@@ -93,7 +97,7 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	if err != nil {
 		return err
 	}
-    //fmt.Println(req.URL.String())
+	//fmt.Println(req.URL.String())
 	//fmt.Println(string(resBody))
 
 	// Successful response

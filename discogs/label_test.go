@@ -31,7 +31,7 @@ func TestGetLabelReleases(t *testing.T) {
 	assert.NotNil(t, labelReleases.Items)
 	assert.Equal(t, labelReleases.Page, 1)
 
-    nextReleases, err := testClient.GetLabelReleases(testLabelID, &PageOptions{Page: "2"})
-    assert.NotNil(t, nextReleases.Releases)
-    assert.Equal(t, nextReleases.Page, 2)
+	nextReleases, err := testClient.GetLabelReleases(testLabelID, &PageOptions{Page: "2"})
+	assert.NotNil(t, nextReleases.Releases)
+	assert.Equal(t, nextReleases.Page, 2)
 }

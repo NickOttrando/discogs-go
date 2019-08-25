@@ -21,13 +21,13 @@ type Track struct {
 }
 
 type Rating struct {
-    Count int `json:"count"`
-    Average float32 `json:"average"`
+	Count   int     `json:"count"`
+	Average float32 `json:"average"`
 }
 
 type RatingResponse struct {
-    Rating Rating `json:"rating"`
-    ReleaseID int64 `json:"release_id"`
+	Rating    Rating `json:"rating"`
+	ReleaseID int64  `json:"release_id"`
 }
 
 type Release struct {
@@ -74,11 +74,11 @@ func (c *Client) GetRelease(releaseID int64) (out *Release, err error) {
 }
 
 func (c *Client) GetReleaseRating(releaseID int64) (out *RatingResponse, err error) {
-    err = c.get(fmt.Sprintf("releases/%d/rating", releaseID), nil, &out)
-    return
+	err = c.get(fmt.Sprintf("releases/%d/rating", releaseID), nil, &out)
+	return
 }
 
 func (c *Client) GetReleaseRatingByUser(releaseID int64, username string) (out *Rating, err error) {
-    err = c.get(fmt.Sprintf("releases/%d/rating/%s", releaseID, username), nil, &out)
-    return
+	err = c.get(fmt.Sprintf("releases/%d/rating/%s", releaseID, username), nil, &out)
+	return
 }
