@@ -6,14 +6,16 @@ import (
 	assert "github.com/stretchr/testify/require"
 )
 
+var testMasterID = int64(565)
+
 func TestGetMaster(t *testing.T) {
-	master, err := testClient.GetMaster(565)
+	master, err := testClient.GetMaster(testMasterID)
 	assert.Nil(t, err)
 	assert.NotNil(t, master.ID)
 }
 
 func TestGetMasterVersions(t *testing.T) {
-	masterVersions, err := testClient.GetMasterVersions(565)
+	masterVersions, err := testClient.GetMasterVersions(testMasterID)
 	versions := masterVersions.Versions
 	assert.Nil(t, err)
 	assert.NotNil(t, versions)

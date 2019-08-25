@@ -16,7 +16,7 @@ type Listing struct {
 	AllowOffers           bool    `json:"allow_offers"`
 	URI                   string  `json:"uri"`
 	Comments              string  `json:"comments"`
-	Seller                Seller  `json:"seller"`
+	Seller                User    `json:"seller"`
 	Price                 Price   `json:"price"`
 	OriginalShippingPrice Price   `json:"original_shipping_price"`
 	SleeveCondition       string  `json:"sleeve_condition"`
