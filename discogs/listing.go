@@ -28,7 +28,17 @@ type Listing struct {
 	Posted                string  `json:"posted"`
 }
 
+type InventoryResponse struct {
+	Listings   []Listing `json:"listings"`
+	Pagination `json:"pagination"`
+}
+
 func (c *Client) GetListing(listingID int64) (out *Listing, err error) {
 	err = c.get(fmt.Sprintf("marketplace/listings/%d", listingID), nil, &out)
+	return
+}
+
+func (c *Client) GetUserInventory(userName string, opts *PageOptions) (out *InventoryResponse, err error) {
+	err = c.get(fmt.Sprintf("users/%s/inventory", userName), &opts, &out)
 	return
 }

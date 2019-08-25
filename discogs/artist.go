@@ -28,7 +28,6 @@ func (c *Client) GetArtist(artistID int64) (out *Artist, err error) {
 	return
 }
 
-// get releases for artist, todo: support sort params
 func (c *Client) GetArtistReleases(artistID int64, opts *PageOptions) (out *ReleasesResponse, err error) {
 	err = c.get(fmt.Sprintf("artists/%d/releases", artistID), &opts, &out)
 	return
