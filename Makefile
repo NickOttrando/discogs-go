@@ -1,8 +1,10 @@
-.PHONY: run info %
-.DEFAULT_GOAL := info
-
-info:
-	echo "No target specified: try 'run'"
+.DEFAULT_GOAL := test
 
 test:
-	go test ./...
+	go test ./discogs/
+
+fmt:
+	go fmt ./...
+
+build:
+	go build
