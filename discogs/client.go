@@ -105,7 +105,13 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 		return json.Unmarshal(resBody, out)
 	}
 
-	return err
+	// Attempt to unmarshal into error
+	var discogsErr Error
+	if err = json.Unmarshal(resBody, &discogsErr); err != nil {
+		return err
+	}
+	discogsErr.StatusCode = res.StatusCode
+	return discogsErr
 }
 
 func (c *Client) get(endpoint string, in, out interface{}) error {
