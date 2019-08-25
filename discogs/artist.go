@@ -29,10 +29,13 @@ func (c *Client) GetArtist(artistID int64) (out *Artist, err error) {
 }
 
 func (c *Client) GetArtistReleases(artistID int64, opts *ListOptions) (out *ReleasesResponse, err error) {
-    fmtedOpts, err := opts.Format()
-    if err != nil {
-        return nil, err
-    }
+	var fmtedOpts *ListOptionsFmted
+	if opts != nil {
+		fmtedOpts, err = opts.Format()
+	}
+	if err != nil {
+		return nil, err
+	}
 	err = c.get(fmt.Sprintf("artists/%d/releases", artistID), &fmtedOpts, &out)
 	return
 }

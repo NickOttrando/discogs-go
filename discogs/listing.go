@@ -40,10 +40,13 @@ func (c *Client) GetListing(listingID int64) (out *Listing, err error) {
 }
 
 func (c *Client) GetUserInventory(userName string, opts *ListOptions) (out *InventoryResponse, err error) {
-    fmtedOpts, err := opts.Format()
-    if err != nil {
-        return nil, err
-    }
+	var fmtedOpts *ListOptionsFmted
+	if opts != nil {
+		fmtedOpts, err = opts.Format()
+	}
+	if err != nil {
+		return nil, err
+	}
 	err = c.get(fmt.Sprintf("users/%s/inventory", userName), &fmtedOpts, &out)
 	return
 }

@@ -23,8 +23,26 @@ type Order struct {
 	Total                  Price     `json:"total"`
 }
 
+type OrdersResponse struct {
+	Orders []Order `json:"orders"`
+	Pagination
+}
+
 // todo: raise error unless Client is authenticated?
 func (c *Client) GetOrder(orderID string) (out *Order, err error) {
 	err = c.get(fmt.Sprintf("marketplace/orders/%s", orderID), nil, &out)
+	return
+}
+
+// todo: support sort params, raise error if not auth
+func (c *Client) GetOrders(opts *ListOptions) (out *OrdersResponse, err error) {
+	var fmtedOpts *ListOptionsFmted
+	if opts != nil {
+		fmtedOpts, err = opts.Format()
+	}
+	if err != nil {
+		return nil, err
+	}
+	err = c.get("marketplace/orders", &fmtedOpts, &out)
 	return
 }

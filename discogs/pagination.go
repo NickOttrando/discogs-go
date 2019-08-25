@@ -1,7 +1,7 @@
 package discogs
 
 import (
-    "strconv"
+	"strconv"
 )
 
 type PaginationURL struct {
@@ -16,7 +16,6 @@ type Pagination struct {
 	URLs    PaginationURL `json:"urls"`
 	Items   int           `json:"items"`
 }
-
 
 type ListOptions struct {
 	PerPage   int    `json:"per_page,omitempty"`
@@ -33,14 +32,10 @@ type ListOptionsFmted struct {
 }
 
 func (o *ListOptions) Format() (out *ListOptionsFmted, err error) {
-    //o is nil if no options given, avoid null pointer exception
-    if o == nil {
-        return
-    }
-    return &ListOptionsFmted{
-        PerPage: strconv.Itoa(o.PerPage),
-        Page: strconv.Itoa(o.Page),
-        Sort: o.Sort,
-        SortOrder: o.SortOrder,
-    }, nil
+	return &ListOptionsFmted{
+		PerPage:   strconv.Itoa(o.PerPage),
+		Page:      strconv.Itoa(o.Page),
+		Sort:      o.Sort,
+		SortOrder: o.SortOrder,
+	}, nil
 }
