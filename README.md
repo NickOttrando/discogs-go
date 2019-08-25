@@ -29,15 +29,46 @@ Testing
    
 Installation
 ------------
-todo
+`go get -u github.com/NickOttrando/discogs-go`
 
 Documentation
 -------------
-todo
+See Discogs API docs [here](https://www.discogs.com/developers/).
 
 Getting Started
 ---------------
-todo
+Below is an example of how to get started and how to use pagination/sorting for list endpoints. For more examples, see the test files. Only a UserAgent is required unless hitting Auth endpoints (orders, etc.)
+```
+package main
+
+import (
+   "fmt"
+   "os"
+   
+   "github.com/NickOttrando/discogs-go"
+)
+
+var clientOptions = ClientOptions{
+   UserAgent: os.Getenv("DISCOGS_USER_AGENT"),
+   Token:     os.Getenv("DISCOGS_TOKEN"),
+}
+
+var discogsClient, err := discogs.NewClient(clientOptions)
+if err != nil {
+   panic(err)
+}
+
+// fetch artist profile
+artist, err := discogsClient.GetArtist(1713695)
+fmt.Println(artist.Name)
+
+// fetch artist releases, see how many pages there are
+artistReleases, err := discogsClient.GetArtistReleases(1713695, nil)
+fmt.Println(artistReleases.releases[0].Title)
+fmt.Println(artistReleases.Pages)
+
+moreReleases, err := discogsClient.GetArtistReleases(1713695, &ListOptions{Page: 2, Sort: "year", PerPage: 5})
+```
 
 License
 -------
