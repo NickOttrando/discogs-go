@@ -2,7 +2,6 @@ package discogs
 
 import (
 	"testing"
-	//"fmt"
 
 	assert "github.com/stretchr/testify/require"
 )
