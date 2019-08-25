@@ -39,7 +39,11 @@ func (c *Client) GetListing(listingID int64) (out *Listing, err error) {
 	return
 }
 
-func (c *Client) GetUserInventory(userName string, opts *PageOptions) (out *InventoryResponse, err error) {
-	err = c.get(fmt.Sprintf("users/%s/inventory", userName), &opts, &out)
+func (c *Client) GetUserInventory(userName string, opts *ListOptions) (out *InventoryResponse, err error) {
+    fmtedOpts, err := opts.Format()
+    if err != nil {
+        return nil, err
+    }
+	err = c.get(fmt.Sprintf("users/%s/inventory", userName), &fmtedOpts, &out)
 	return
 }

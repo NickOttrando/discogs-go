@@ -30,7 +30,7 @@ func TestGetListing(t *testing.T) {
 }
 
 func TestGetInventory(t *testing.T) {
-	inventory, err := testClient.GetUserInventory(testUser, &PageOptions{PerPage: "10"})
+	inventory, err := testClient.GetUserInventory(testUser, &ListOptions{PerPage: 10})
 	listings := inventory.Listings
 	assert.Nil(t, err)
 	assert.NotNil(t, inventory)

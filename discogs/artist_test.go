@@ -32,7 +32,7 @@ func TestGetArtistReleases(t *testing.T) {
 	assert.NotNil(t, artistReleases.Items)
 	assert.Equal(t, artistReleases.Page, 1)
 
-	nextReleases, err := testClient.GetArtistReleases(testArtistID, &PageOptions{Page: "2", Sort: "year", PerPage: "5"})
+	nextReleases, err := testClient.GetArtistReleases(testArtistID, &ListOptions{Page: 2, Sort: "year", PerPage: 5})
 	assert.NotNil(t, nextReleases.Releases)
 	assert.Equal(t, nextReleases.Page, 2)
 	assert.Len(t, nextReleases.Releases, 5)
