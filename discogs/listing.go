@@ -6,6 +6,7 @@ import (
 
 type Price struct {
 	Currency string  `json:"currency"`
+	Method   string  `json:"method"`
 	Value    float32 `json:"value"`
 }
 
@@ -28,7 +29,24 @@ type Listing struct {
 	Posted                string  `json:"posted"`
 }
 
+type InventoryResponse struct {
+	Listings   []Listing `json:"listings"`
+	Pagination `json:"pagination"`
+}
+
 func (c *Client) GetListing(listingID int64) (out *Listing, err error) {
 	err = c.get(fmt.Sprintf("marketplace/listings/%d", listingID), nil, &out)
+	return
+}
+
+func (c *Client) GetUserInventory(userName string, opts *ListOptions) (out *InventoryResponse, err error) {
+	var fmtedOpts *ListOptionsFmted
+	if opts != nil {
+		fmtedOpts, err = opts.Format()
+	}
+	if err != nil {
+		return nil, err
+	}
+	err = c.get(fmt.Sprintf("users/%s/inventory", userName), &fmtedOpts, &out)
 	return
 }

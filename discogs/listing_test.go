@@ -7,6 +7,7 @@ import (
 )
 
 var testListingID = int64(988369143)
+var testUser = "clintonstreetrecords"
 
 func TestGetListing(t *testing.T) {
 	listing, err := testClient.GetListing(testListingID)
@@ -26,4 +27,13 @@ func TestGetListing(t *testing.T) {
 	assert.NotNil(t, listing.Audio)
 	assert.NotNil(t, listing.Condition)
 	assert.NotNil(t, listing.Posted)
+}
+
+func TestGetInventory(t *testing.T) {
+	inventory, err := testClient.GetUserInventory(testUser, &ListOptions{PerPage: 10})
+	listings := inventory.Listings
+	assert.Nil(t, err)
+	assert.NotNil(t, inventory)
+	assert.NotNil(t, listings)
+	assert.NotNil(t, inventory.Page)
 }

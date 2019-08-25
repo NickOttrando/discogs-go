@@ -18,7 +18,14 @@ func (c *Client) GetLabel(labelID int64) (out *Label, err error) {
 	return
 }
 
-func (c *Client) GetLabelReleases(labelID int64, opts *PageOptions) (out *ReleasesResponse, err error) {
-	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), &opts, &out)
+func (c *Client) GetLabelReleases(labelID int64, opts *ListOptions) (out *ReleasesResponse, err error) {
+	var fmtedOpts *ListOptionsFmted
+	if opts != nil {
+		fmtedOpts, err = opts.Format()
+	}
+	if err != nil {
+		return nil, err
+	}
+	err = c.get(fmt.Sprintf("labels/%d/releases", labelID), &fmtedOpts, &out)
 	return
 }
