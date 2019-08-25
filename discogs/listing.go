@@ -6,6 +6,7 @@ import (
 
 type Price struct {
 	Currency string  `json:"currency"`
+	Method   string  `json:"method"`
 	Value    float32 `json:"value"`
 }
 

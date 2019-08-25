@@ -78,7 +78,7 @@ func (c *Client) newRequest(endpoint string, method string, in, out interface{})
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", c.userAgent)
 	if len(c.token) > 0 {
-		req.Header.Add("Authorization", "Discogs token:"+c.token)
+		req.Header.Add("Authorization", "Discogs token="+c.token)
 	}
 
 	return req, nil
@@ -97,6 +97,7 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	if err != nil {
 		return err
 	}
+
 	//fmt.Println(req.URL.String())
 	//fmt.Println(string(resBody))
 

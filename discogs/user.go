@@ -9,6 +9,7 @@ type UserStats struct {
 type User struct {
 	ID          int64     `json:"id"`
 	UserName    string    `json:"username"`
+	Email       string    `json:"email"`
 	Stats       UserStats `json:"stats"`
 	UID         int64     `json:"uid"`
 	URL         string    `json:"url"`
