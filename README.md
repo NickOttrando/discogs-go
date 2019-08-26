@@ -1,4 +1,5 @@
 # Discogs Go Client Library
+[![Build Status](https://travis-ci.org/NickOttrando/discogs-go.svg?branch=master)](https://travis-ci.org/NickOttrando/discogs-go)
 
 Go Client Library for [Discogs REST API](https://www.discogs.com/developers/).
 
