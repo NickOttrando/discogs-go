@@ -2,3 +2,7 @@ language: go
 
 go:
   - "1.12.7"
+
+before_script: 
+  - go get github.com/stretchr/testify
+  - go vet
