@@ -39,40 +39,20 @@ func NewClient(options ClientOptions) (client *Client, err error) {
 }
 
 // Builds request object, calls do once it's been formatted
-func (c *Client) Call(endpoint string, method string, in, out interface{}) error {
-	req, err := c.newRequest(endpoint, method, in, out)
+func (c *Client) Call(endpoint string, method string, listOpts, queryArgs, out interface{}) error {
+
+	req, err := http.NewRequest(method, "https://"+string(baseURL)+endpoint, nil)
 	if err != nil {
 		return err
 	}
 
-	return c.do(req, out)
-}
-
-// Formats the request structure, adds query strings to URL and headers for auth
-func (c *Client) newRequest(endpoint string, method string, in, out interface{}) (*http.Request, error) {
-	req, err := http.NewRequest(method, "https://"+string(baseURL)+endpoint, nil)
-	if err != nil {
-		return nil, err
+	// query args strings for pagination, sort, etc.
+	if listOpts != nil {
+		addQueryArgs(req, listOpts)
 	}
 
-	// query args strings for pagination, sort, etc.
-	if in != nil {
-		buf, err := json.Marshal(in)
-		if err != nil {
-			return nil, err
-		}
-		m := make(map[string]string)
-
-		err = json.Unmarshal(buf, &m)
-		if err != nil {
-			return nil, err
-		}
-
-		q := req.URL.Query()
-		for k, v := range m {
-			q.Add(k, v)
-		}
-		req.URL.RawQuery = q.Encode()
+	if queryArgs != nil {
+		addQueryArgs(req, queryArgs)
 	}
 
 	req.Header.Add("Content-Type", "application/json")
@@ -80,8 +60,27 @@ func (c *Client) newRequest(endpoint string, method string, in, out interface{})
 	if len(c.token) > 0 {
 		req.Header.Add("Authorization", "Discogs token="+c.token)
 	}
+	return c.do(req, out)
+}
 
-	return req, nil
+func addQueryArgs(req *http.Request, args interface{}) error {
+	buf, err := json.Marshal(args)
+	if err != nil {
+		return err
+	}
+	m := make(map[string]string)
+
+	err = json.Unmarshal(buf, &m)
+	if err != nil {
+		return err
+	}
+
+	q := req.URL.Query()
+	for k, v := range m {
+		q.Add(k, v)
+	}
+	req.URL.RawQuery = q.Encode()
+	return nil
 }
 
 // makes the formatted request and handles the response
@@ -115,18 +114,10 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 	return discogsErr
 }
 
-func (c *Client) get(endpoint string, in, out interface{}) error {
-	return c.Call(endpoint, "GET", in, out)
+func (c *Client) get(endpoint string, listOpts, out interface{}) error {
+	return c.Call(endpoint, "GET", listOpts, nil, out)
 }
 
-func (c *Client) post(endpoint string, in, out interface{}) error {
-	return c.Call(endpoint, "POST", in, out)
-}
-
-func (c *Client) put(endpoint string, in, out interface{}) error {
-	return c.Call(endpoint, "PUT", in, out)
-}
-
-func (c *Client) delete(endpoint string) error {
-	return c.Call(endpoint, "DELETE", nil, nil)
+func (c *Client) searchGet(endpoint string, listOpts, queryArgs, out interface{}) error {
+	return c.Call(endpoint, "GET", listOpts, queryArgs, out)
 }

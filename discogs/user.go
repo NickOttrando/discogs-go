@@ -6,6 +6,11 @@ type UserStats struct {
 	Stars  float32 `json:"stars"`
 }
 
+type UserData struct {
+	InCollection bool `json:"in_collection"`
+	InWantlist   bool `json:"in_wantlist"`
+}
+
 type User struct {
 	ID          int64     `json:"id"`
 	UserName    string    `json:"username"`
