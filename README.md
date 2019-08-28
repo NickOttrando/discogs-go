@@ -60,16 +60,25 @@ func main() {
 		panic(err)
 	}
 
+	// search for a label
+	labelSearch, err := discogsClient.Search(&discogs.SearchParams{Type: "label", Query: "Warp Records"}, nil)
+	fmt.Println(labelSearch.Results[0].Title)
+
+	// search for an artist
+	artistSearch, err := discogsClient.Search(&discogs.SearchParams{Type: "artist", Query: "Aphex Twin"}, &discogs.ListOptions{PerPage: 1})
+	artistID := artistSearch.Results[0].ID
+	fmt.Println(artistID)
+
 	// fetch artist profile
-	artist, err := discogsClient.GetArtist(1713695)
+	artist, err := discogsClient.GetArtist(artistID)
 	fmt.Println(artist.Name)
 
 	// fetch artist releases, see how many pages there are
-	artistReleases, err := discogsClient.GetArtistReleases(1713695, nil)
+	artistReleases, err := discogsClient.GetArtistReleases(artistID, nil)
 	fmt.Println(artistReleases.Releases[0].Title)
 	fmt.Println(artistReleases.Pages)
 
-	moreReleases, err := discogsClient.GetArtistReleases(1713695, &discogs.ListOptions{Page: 2, Sort: "year", PerPage: 5})
+	moreReleases, err := discogsClient.GetArtistReleases(artistID, &discogs.ListOptions{Page: 2, Sort: "year", PerPage: 5})
 	fmt.Println(moreReleases.Releases[0].Title)
 	fmt.Println(moreReleases.Page)
 
