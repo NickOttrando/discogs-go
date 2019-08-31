@@ -46,7 +46,7 @@ func (c *Client) Call(endpoint string, method string, listOpts, queryArgs, out i
 		return err
 	}
 
-	// query args strings for pagination, sort, etc.
+	// Query args strings for pagination, sort, etc.
 	if listOpts != nil {
 		addQueryArgs(req, listOpts)
 	}
@@ -83,7 +83,7 @@ func addQueryArgs(req *http.Request, args interface{}) error {
 	return nil
 }
 
-// makes the formatted request and handles the response
+// Makes the formatted request and handles the response
 func (c *Client) do(req *http.Request, out interface{}) error {
 	res, err := c.httpClient.Do(req)
 
@@ -97,6 +97,7 @@ func (c *Client) do(req *http.Request, out interface{}) error {
 		return err
 	}
 
+	// If we need to check responses
 	//fmt.Println(req.URL.String())
 	//fmt.Println(string(resBody))
 
