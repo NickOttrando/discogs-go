@@ -41,13 +41,15 @@ type OrderMessagesResponse struct {
 	Pagination
 }
 
-// todo: raise error unless Client is authenticated?
+// View the data associated with an order.
+// Authentication as the seller is required.
 func (c *Client) GetOrder(orderID string) (out *Order, err error) {
 	err = c.get(fmt.Sprintf("marketplace/orders/%s", orderID), nil, &out)
 	return
 }
 
-// todo: support sort params, raise error if not auth
+// Returns a list of the authenticated user’s orders.
+// Accepts Pagination parameters.
 func (c *Client) GetOrders(opts *ListOptions) (out *OrdersResponse, err error) {
 	var fmtedOpts *ListOptionsFmted
 	if opts != nil {
@@ -60,7 +62,9 @@ func (c *Client) GetOrders(opts *ListOptions) (out *OrdersResponse, err error) {
 	return
 }
 
-// todo: raise error if not auth
+// Returns a list of the order’s messages with the most recent first.
+// Accepts Pagination parameters.
+// Authentication as the seller is required.
 func (c *Client) GetOrderMessages(orderID string, opts *ListOptions) (out *OrderMessagesResponse, err error) {
 	var fmtedOpts *ListOptionsFmted
 	if opts != nil {

@@ -15,7 +15,7 @@ func TestGetMaster(t *testing.T) {
 }
 
 func TestGetMasterVersions(t *testing.T) {
-	masterVersions, err := testClient.GetMasterVersions(testMasterID)
+	masterVersions, err := testClient.GetMasterVersions(testMasterID, nil)
 	versions := masterVersions.Versions
 	assert.Nil(t, err)
 	assert.NotNil(t, versions)

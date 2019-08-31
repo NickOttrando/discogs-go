@@ -30,6 +30,8 @@ type RatingResponse struct {
 	ReleaseID int64  `json:"release_id"`
 }
 
+// The Release resource represents a particular physical or
+// digital object released by one or more Artists.
 type Release struct {
 	ID                   int64       `json:"id"`
 	Status               string      `json:"status"`
@@ -67,17 +69,19 @@ type ReleasesResponse struct {
 	Pagination `json:"pagination"`
 }
 
-// todo: support curr_abbr toggle
+// Get a release
 func (c *Client) GetRelease(releaseID int64) (out *Release, err error) {
 	err = c.get(fmt.Sprintf("releases/%d", releaseID), nil, &out)
 	return
 }
 
+// Retrieves the community release rating average and count.
 func (c *Client) GetReleaseRating(releaseID int64) (out *RatingResponse, err error) {
 	err = c.get(fmt.Sprintf("releases/%d/rating", releaseID), nil, &out)
 	return
 }
 
+// Retrieves the release’s rating for a given user.
 func (c *Client) GetReleaseRatingByUser(releaseID int64, username string) (out *Rating, err error) {
 	err = c.get(fmt.Sprintf("releases/%d/rating/%s", releaseID, username), nil, &out)
 	return

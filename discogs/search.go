@@ -42,6 +42,9 @@ type SearchResponse struct {
 	Pagination
 }
 
+// Issue a search query to the Discogs database.
+// This endpoint accepts pagination parameters.
+// Authentication (as any user) is required.
 func (c *Client) Search(query *SearchParams, opts *ListOptions) (out *SearchResponse, err error) {
 	var fmtedOpts *ListOptionsFmted
 	if opts != nil {

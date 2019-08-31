@@ -1,6 +1,5 @@
 package discogs
 
-//todo: support filter facets and filters?
 type Version struct {
 	Release
 }

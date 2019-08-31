@@ -10,6 +10,8 @@ type ArtistAlias struct {
 	ResourceURL string `json:"resource_url"`
 }
 
+// The Artist resource represents a person in the Discogs database who
+// contributed to a Release in some capacity.
 type Artist struct {
 	ID          int64         `json:"id"`
 	Name        string        `json:"name"`
@@ -23,11 +25,14 @@ type Artist struct {
 	Aliases     []ArtistAlias `json:"aliases"`
 }
 
+// Get an artist
 func (c *Client) GetArtist(artistID int64) (out *Artist, err error) {
 	err = c.get(fmt.Sprintf("artists/%d", artistID), nil, &out)
 	return
 }
 
+// Get an artist’s Releases and Masters
+// Accepts Pagination.
 func (c *Client) GetArtistReleases(artistID int64, opts *ListOptions) (out *ReleasesResponse, err error) {
 	var fmtedOpts *ListOptionsFmted
 	if opts != nil {
