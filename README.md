@@ -16,8 +16,6 @@ This wrapper currently supports the following (* requires auth through Token)
    
    - Pagination / Sorting
 
-This project is currently in pre-release stages. If you'd like to contribute, see below.
-
 Contributing
 ------------
 Issues and pull reuqests welcomed.
