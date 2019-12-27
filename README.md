@@ -11,7 +11,7 @@ This wrapper currently supports the following (* requires auth through Token)
    - Master Releases
    - Labels
    - Inventory
-   - Listings
+   - Listings*
    - Orders*
    
    - Pagination / Sorting
