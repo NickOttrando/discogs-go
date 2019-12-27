@@ -2,6 +2,7 @@ package discogs
 
 import (
 	"testing"
+  "strings"
 
 	assert "github.com/stretchr/testify/require"
 )
@@ -9,9 +10,11 @@ import (
 var testListingID = int64(988369143)
 var testUser = "clintonstreetrecords"
 
+// requires auth
 func TestGetListing(t *testing.T) {
 	listing, err := testClient.GetListing(testListingID)
 	assert.NotNil(t, err)
+  assert.True(t, strings.Contains(err.Error(), "401"))
   assert.Nil(t, listing)
 }
 
